@@ -1,0 +1,42 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('cleanWs') {
+            steps {
+                cleanWs()
+            }
+        }
+
+        stage('Ler XML') {
+            steps {
+                script {
+                    git url: 'https://github.com/willdjames/jenkins-read-xml.git',
+                        poll: false,
+                        branch: 'main'
+                    
+                    def portaHttp = "8080"
+                    def portaHttps = "8084"
+                    
+                    def serverXml = readFile 'server.xml'
+                    def serverXmlString = serverXml.toString()
+
+                    echo serverXmlString
+
+                    serverXmlString = serverXmlString.replace('${SUB_PORTA_HTTP}',portaHttp)
+                    serverXmlString = serverXmlString.replace('${SUB_PORTA_HTTPS}',portaHttps)
+
+                    echo serverXmlString
+                    
+                    writeFile file: 'server2.xml', text: serverXmlString
+                }
+            }
+        }
+        
+    }
+    post {
+        success {
+            echo 'Sucesso!!'
+        }
+    }
+}
