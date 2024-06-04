@@ -28,8 +28,8 @@
 
     <!-- To access this server from a remote client add a host attribute to the following element, e.g. host="*" -->
     <httpEndpoint id="defaultHttpEndpoint"
-                  httpPort="SUB_PORTA_HTTP"
-                  httpsPort="SUB_PORTA_HTTPS" />
+                  httpPort="${SUB_PORTA_HTTP}"
+                  httpsPort="${SUB_PORTA_HTTPS}" />
 
     <!-- Automatically expand WAR files and EAR files -->
     <applicationManager autoExpand="true"/>
